@@ -1,4 +1,4 @@
-# Interview Presentation — StratiSell AI Control Plane
+# Interview Presentation — AI Control Plane
 
 **Duration:** ~11 minutes  
 **Opening line:** *"I decided not to show a generic chatbot or an AI script that fixes YAML. Instead, I built the kind of platform I believe this role actually needs."*
@@ -9,6 +9,8 @@ Run the live demo:
 aicp presentation
 ```
 
+> **Note:** Share only the LoluPapi repos listed at the bottom. Company code stays private — talk about production experience verbally, demo this open-source control plane live.
+
 ---
 
 ## Minute 0–1: Why this matters
@@ -17,8 +19,8 @@ aicp presentation
 
 > AI demos are easy. The difficult part is making AI trustworthy enough to trigger real business actions.
 >
-> In StratiSell, a wrong product price or payment instruction can lose money.
-> In Vanilla Steel, a wrong grade, norm or dimension can create a serious procurement mistake.
+> In commerce, a wrong product price or payment instruction can lose money.
+> In steel procurement, a wrong grade, norm or dimension can create a serious mistake.
 >
 > So the platform has to **validate, observe and govern** every AI decision — not just call a model.
 
@@ -26,7 +28,7 @@ aicp presentation
 
 ---
 
-## Minute 1–3: StratiSell ↔ Vanilla Steel mapping
+## Minute 1–3: Commerce ↔ Steel mapping
 
 **Say:**
 
@@ -35,8 +37,8 @@ aicp presentation
 Show the flow diagram (printed by `aicp presentation`), then:
 
 ```bash
-aicp run commerce   # StratiSell
-aicp run steel      # Vanilla Steel equivalent
+aicp run commerce   # Use case A — commerce order
+aicp run steel      # Use case B — steel RFQ
 ```
 
 **Commerce input:**
@@ -65,9 +67,8 @@ Point at structured Pydantic output and validation gate.
 | Observability | Prometheus + golden evals | Quality, latency, cost together |
 | Deploy | Pulumi components | SaaS GCP, customer AWS/Azure/on-prem |
 
-Point to companion repos:
-- `pulumi-ai-platform` — IaC
-- `stratiflux-gitops/platform/enterprise-ai` — running LiteLLM/KServe bundle
+Point to companion repos (LoluPapi only):
+- `pulumi-ai-platform` — IaC + `deploy/kubernetes/` GitOps bundle
 
 ---
 
@@ -97,7 +98,7 @@ aicp run injection
 
 **Show blocked response.** Then say:
 
-> Inbound emails, documents and WhatsApp messages are untrusted data. They must never become system instructions or gain unrestricted tool access.
+> Inbound emails, documents and chat messages are untrusted data. They must never become system instructions or gain unrestricted tool access.
 
 ```bash
 aicp tenant-isolation
@@ -127,18 +128,10 @@ aicp costs
 Open `pulumi-ai-platform` and show:
 
 ```
-shared-platform/
-  components/
-    kubernetes/
-    litellm/
-    kserve/
-    observability/
-    vector-store/
-  stacks/
-    saas-gcp/
-    customer-aws/
-    customer-azure/
-    customer-onprem/
+pulumi-ai-platform/
+  components/          ← reusable AiPlatform Pulumi component
+  stacks/              ← saas-gcp, customer-aws, customer-azure, customer-onprem
+  deploy/kubernetes/   ← LiteLLM + KServe manifests (kubectl apply -k)
 ```
 
 **Say:**
@@ -164,9 +157,9 @@ const platform = new AiPlatform("customer-a", {
 
 > My platform background gives me the Kubernetes, GitOps, Pulumi, security, observability and reliability foundation.
 >
-> StratiSell gave me the applied-AI side: unstructured input, retrieval, structured actions, multi-tenancy, payments and business risk.
+> Production work on commerce agents gave me the applied-AI side: unstructured input, retrieval, structured actions, multi-tenancy, payments and business risk.
 >
-> This project brings both together into the kind of AI platform Vanilla Steel is hiring for.
+> This open-source project brings both together into the kind of AI platform you're hiring for.
 
 ---
 
@@ -174,15 +167,14 @@ const platform = new AiPlatform("customer-a", {
 
 | Question | Answer anchor |
 |----------|---------------|
-| Why not LangChain? | Hand-written orchestration in Go (StratiSell) and Python here — explicit guards, testable stages |
+| Why not LangChain? | Hand-written orchestration — explicit guards, testable stages (see this repo) |
 | How do you handle model upgrades? | Golden eval regression gate; LiteLLM aliases swap models without app code changes |
 | Multi-tenant security? | Retrieval filters + runtime tenant identity + policy flags; injection blocked pre-model |
 | Cost control? | Risk-based routing to small models; per-tenant cost attribution on every request |
 | On-prem / EU? | `externalProvidersAllowed: false` → route to `local-qwen-eu` via KServe |
 
-## Repos to share
+## Repos to share (LoluPapi only)
 
-1. https://github.com/LoluPapi/stratisell-ai-control-plane
+1. https://github.com/LoluPapi/ai-control-plane
 2. https://github.com/LoluPapi/pulumi-ai-platform
 3. https://github.com/LoluPapi/foundry-agent-evals
-4. https://github.com/stratiflux/stratiflux-gitops/tree/main/platform/enterprise-ai

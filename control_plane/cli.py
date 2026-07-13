@@ -26,7 +26,7 @@ DEMO_INPUTS = {
             "I need 50 black caps delivered to Lagos by Friday. "
             "Send me the total and payment options."
         ),
-        "label": "StratiSell — commerce order extraction",
+        "label": "Commerce — order extraction",
     },
     "steel": {
         "tenant_id": "vanilla_steel_eu",
@@ -197,7 +197,7 @@ def cmd_costs(_: argparse.Namespace) -> int:
 def cmd_presentation(_: argparse.Namespace) -> int:
     """Run the full 10-minute interview sequence."""
     sequence = [
-        ("commerce", "Use case A — StratiSell commerce"),
+        ("commerce", "Use case A — commerce order"),
         ("steel", "Use case B — Vanilla Steel RFQ"),
         ("injection", "Failure demo — prompt injection blocked"),
     ]
@@ -206,7 +206,7 @@ def cmd_presentation(_: argparse.Namespace) -> int:
 
     console.print(
         Panel(
-            "StratiSell AI Control Plane\n"
+            "AI Control Plane\n"
             "Multi-tenant platform: unstructured requests → validated business actions",
             border_style="bold magenta",
         )
@@ -233,7 +233,7 @@ def cmd_presentation(_: argparse.Namespace) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="StratiSell AI Control Plane — interview demo CLI",
+        description="AI Control Plane — interview demo CLI",
     )
     sub = parser.add_subparsers(dest="command", required=True)
 

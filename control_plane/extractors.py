@@ -102,7 +102,7 @@ def extract_via_llm(text: str, *, tenant_id: str, use_case: str, model: str):
     try:
         from openai import OpenAI
     except ImportError as exc:
-        raise RuntimeError("Install with: pip install 'stratisell-ai-control-plane[llm]'") from exc
+        raise RuntimeError("Install with: pip install 'ai-control-plane[llm]'") from exc
 
     base_url = os.environ.get("LITELLM_BASE_URL", "http://localhost:4000/v1")
     api_key = os.environ.get("LITELLM_API_KEY", "sk-demo")

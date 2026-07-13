@@ -26,7 +26,7 @@ class SecurityDecision:
 
 
 def wrap_untrusted(raw: str) -> str:
-    """Mirror StratiSell's <untrusted_user_message> envelope."""
+    """Wrap inbound text in an <untrusted_user_message> envelope."""
     cleaned = raw.replace("</untrusted_user_message>", "").replace(
         "<untrusted_user_message>", ""
     )

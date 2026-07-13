@@ -1,17 +1,17 @@
-# StratiSell AI Control Plane
+# AI Control Plane
 
 A **multi-tenant AI control plane** that converts unstructured business requests into **validated, auditable actions**.
 
-Built from production patterns in [StratiSell](https://stratisell.com) (WhatsApp commerce for Nigerian SMEs), designed to map directly to **Vanilla Steel**-style steel RFQ ingestion — same platform, different schemas and knowledge bases.
+Designed for two interview/demo use cases — **commerce order extraction** and **steel RFQ extraction** — on the same platform with different schemas, policies, and knowledge bases.
 
-> **Interview thesis:** AI demos are easy. The hard part is making AI trustworthy enough to trigger real business actions.
+> **Thesis:** AI demos are easy. The hard part is making AI trustworthy enough to trigger real business actions.
 
 ## Why this exists
 
-| Risk domain | StratiSell | Vanilla Steel equivalent |
-|-------------|------------|--------------------------|
+| Risk domain | Commerce (caps order) | Steel procurement (RFQ) |
+|-------------|----------------------|-------------------------|
 | Wrong extraction | Wrong product price or payment instruction loses money | Wrong grade, norm or dimension creates procurement mistakes |
-| Untrusted input | WhatsApp messages | Inbound emails and attachments |
+| Untrusted input | WhatsApp / chat messages | Inbound emails and attachments |
 | Enterprise needs | Multi-tenant vendors | Multi-tenant buyers, EU data residency |
 
 This repo proves: **I understand the business problem, I can build the platform, I know where AI systems fail, and I can operate them in production.**
@@ -94,7 +94,7 @@ Inbound channels are **untrusted data**. Prompt injection and privilege escalati
 }
 ```
 
-Mirrors StratiSell's `<untrusted_user_message>` envelope and injection detection in production Go code.
+Uses `<untrusted_user_message>` wrapping and pre-model injection detection — patterns common in production agent systems.
 
 ## Tenant isolation
 
@@ -126,27 +126,26 @@ export LITELLM_API_KEY=sk-...
 aicp run commerce --mode llm
 ```
 
-## Companion repos
+## Portfolio (LoluPapi — safe to share)
+
+All repos below are **personal open-source demos**. No proprietary company code.
 
 | Repo | Role |
 |------|------|
-| [pulumi-ai-platform](https://github.com/LoluPapi/pulumi-ai-platform) | Reusable Pulumi components + multi-cloud stacks |
-| [stratiflux-gitops/platform/enterprise-ai](https://github.com/stratiflux/stratiflux-gitops/tree/main/platform/enterprise-ai) | LiteLLM + KServe GitOps bundle |
-| [stratiflux-infra/azure/enterprise-ai-platform](https://github.com/stratiflux/stratiflux-infra) | Azure AKS substrate (Terraform) |
+| [ai-control-plane](https://github.com/LoluPapi/ai-control-plane) | This repo — application control plane + live demo |
+| [pulumi-ai-platform](https://github.com/LoluPapi/pulumi-ai-platform) | Pulumi components + Kubernetes deploy bundle |
 | [foundry-agent-evals](https://github.com/LoluPapi/foundry-agent-evals) | Evaluations as a blocking CI gate |
 
 ## Presentation script
 
 See [PRESENTATION.md](./PRESENTATION.md) for the minute-by-minute interview walkthrough.
 
-## Production lineage
+## Design patterns demonstrated
 
-Patterns ported from StratiSell production code:
-
-- `guardrails.WrapUntrusted` / injection detection → `control_plane/security.py`
-- pgvector tenant-scoped catalog RAG → `control_plane/retrieval.py`
+- `<untrusted_user_message>` envelope + injection detection → `control_plane/security.py`
+- Tenant-scoped retrieval RAG → `control_plane/retrieval.py`
 - OpenAI-compatible LiteLLM gateway → optional `extract_via_llm`
-- Eval gate philosophy → `foundry-agent-evals` + golden dataset report
+- Golden eval regression gate → `data/golden/` + [foundry-agent-evals](https://github.com/LoluPapi/foundry-agent-evals)
 
 ## License
 
