@@ -1,0 +1,20 @@
+{
+  "tenant_id": "vanilla_steel_eu",
+  "entries": [
+    {
+      "source": "grade_book",
+      "content": "S355J2+N — structural steel, normalized, EN 10025-2",
+      "keywords": ["S355", "S355J2", "EN 10025", "plate"]
+    },
+    {
+      "source": "coating",
+      "content": "Shot blasted and primed finish available for plate stock",
+      "keywords": ["shot blast", "primed", "coating"]
+    },
+    {
+      "source": "dimensions",
+      "content": "Standard plate dimensions quoted as thickness x width x length in mm",
+      "keywords": ["mm", "dimensions", "thickness"]
+    }
+  ]
+}

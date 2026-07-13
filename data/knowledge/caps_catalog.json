@@ -1,0 +1,20 @@
+{
+  "tenant_id": "caps_shop_a",
+  "entries": [
+    {
+      "source": "catalog",
+      "content": "Black cap — adjustable, NGN 2,500, in stock",
+      "keywords": ["black", "cap", "caps", "lagos"]
+    },
+    {
+      "source": "catalog",
+      "content": "White cap — adjustable, NGN 2,200, in stock",
+      "keywords": ["white", "cap"]
+    },
+    {
+      "source": "policy",
+      "content": "Lagos delivery available Friday for orders before Wednesday 4pm",
+      "keywords": ["lagos", "friday", "delivery"]
+    }
+  ]
+}

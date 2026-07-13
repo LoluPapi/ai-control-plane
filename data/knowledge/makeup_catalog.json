@@ -1,0 +1,15 @@
+{
+  "tenant_id": "makeup_shop_b",
+  "entries": [
+    {
+      "source": "services",
+      "content": "Bridal makeup package — from NGN 85,000, 3-hour session",
+      "keywords": ["bridal", "makeup", "package"]
+    },
+    {
+      "source": "services",
+      "content": "Gele styling add-on — NGN 15,000",
+      "keywords": ["gele", "styling"]
+    }
+  ]
+}

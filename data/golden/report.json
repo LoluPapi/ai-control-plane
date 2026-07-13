@@ -1,0 +1,8 @@
+{
+  "field_accuracy": 0.942,
+  "invalid_grade_rate": 0.008,
+  "human_review_rate": 0.061,
+  "avg_latency_s": 1.8,
+  "avg_cost_eur": 0.013,
+  "regression_status": "PASS"
+}
