@@ -9,10 +9,11 @@ Interactive docs at http://localhost:8080/docs
 from __future__ import annotations
 
 import os
+from pathlib import Path
 from typing import Literal
 
 from fastapi import FastAPI, Header, Request
-from fastapi.responses import JSONResponse, PlainTextResponse
+from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 from pydantic import BaseModel, Field
 
 from control_plane import __version__
@@ -47,6 +48,15 @@ class ExtractResponse(BaseModel):
     validation_errors: list[str]
     latency_ms: float
     cost_eur: float
+
+
+_DEMO_PAGE = (Path(__file__).parent / "static" / "index.html").read_text()
+
+
+@app.get("/", response_class=HTMLResponse, include_in_schema=False)
+def demo_page() -> str:
+    """Interactive demo UI — fire scenarios and watch the platform decide."""
+    return _DEMO_PAGE
 
 
 @app.get("/healthz", tags=["ops"])

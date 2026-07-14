@@ -26,3 +26,6 @@ aicp = "control_plane.cli:main"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["control_plane*"]
+
+[tool.setuptools.package-data]
+control_plane = ["static/*.html"]

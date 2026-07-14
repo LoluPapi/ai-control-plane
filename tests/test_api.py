@@ -13,6 +13,15 @@ def test_healthz():
     assert resp.json()["status"] == "ok"
 
 
+def test_demo_ui_served_at_root():
+    resp = client.get("/")
+    assert resp.status_code == 200
+    assert "AI" in resp.text and "Control Plane" in resp.text
+    # The three demo scenarios must be wired.
+    assert "run('steel')" in resp.text
+    assert "run('injection')" in resp.text
+
+
 def test_extract_commerce():
     resp = client.post(
         "/v1/extract",
