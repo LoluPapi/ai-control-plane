@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass, field
-from pathlib import Path
 
 from control_plane.extractors import extract_commerce_mock, extract_steel_mock, extract_via_llm
 from control_plane.observability import MetricsStore, RequestMetrics, Timer, estimate_cost
+from control_plane.paths import data_root
 from control_plane.policies import (
     Complexity,
     choose_model,
@@ -19,7 +19,7 @@ from control_plane.schemas import CommerceExtraction, SteelExtraction
 from control_plane.security import SecurityDecision, assess_inbound, wrap_untrusted
 from control_plane.validation import validate_extraction
 
-DATA_ROOT = Path(__file__).resolve().parent.parent / "data"
+DATA_ROOT = data_root()
 
 
 @dataclass

@@ -58,6 +58,42 @@ aicp evals
 aicp costs
 ```
 
+## Run it as a service (FastAPI)
+
+```bash
+uvicorn control_plane.api:app --port 8080
+# interactive docs: http://localhost:8080/docs
+```
+
+| Endpoint | What it proves |
+|----------|----------------|
+| `POST /v1/extract` (`X-Tenant-Id` header) | Full pipeline: policy → routing → RAG → extraction → validation |
+| → HTTP 403 on injection | Security gate before any model call |
+| → HTTP 429 on budget exhaustion | AI FinOps enforced in the request path |
+| `GET /metrics` | Prometheus counters with tenant/model/use-case labels |
+| `GET /v1/costs` | Per-tenant cost attribution |
+| `GET /v1/tenants/{id}/policy` | Governance: residency, provider access, budget |
+| `GET /v1/evals/golden` | Golden-dataset quality gate |
+
+Or run the container (built by CI with provenance attestation):
+
+```bash
+docker run -p 8080:8080 ghcr.io/lolupapi/ai-control-plane:latest
+```
+
+## MCP server (tenant-scoped agentic tools)
+
+```bash
+pip install -e ".[mcp]"
+AICP_TENANT_ID=caps_shop_a python -m control_plane.mcp_server
+```
+
+Tenant identity is bound at **process start from the environment**, never from
+model-controlled tool arguments — a prompt-injected agent cannot reach another
+tenant's data. Tools expose validated platform operations (`extract_request`,
+`search_knowledge`, `get_tenant_policy`), and every result carries the
+platform's `workflow_action` decision.
+
 ## Two use cases, one platform
 
 | Use case | Demo input | Tenant |
@@ -138,7 +174,9 @@ All repos below are **personal open-source demos**. No proprietary company code.
 
 ## Presentation script
 
-See [PRESENTATION.md](./PRESENTATION.md) for the minute-by-minute interview walkthrough.
+See [PRESENTATION.md](./PRESENTATION.md) for the minute-by-minute interview walkthrough,
+and [CHEATSHEET.md](./CHEATSHEET.md) for plain-English explanations of every concept
+(LiteLLM, KServe vs vLLM, MCP security, EU AI Act, FinOps, paved roads).
 
 ## Design patterns demonstrated
 

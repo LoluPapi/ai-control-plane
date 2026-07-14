@@ -2,8 +2,12 @@ name: ci
 
 on:
   push:
-    branches: [main]
+    branches: [master, main]
   pull_request:
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   test:
@@ -15,4 +19,27 @@ jobs:
           python-version: "3.12"
       - run: pip install -e ".[dev]"
       - run: pytest -q
+      # The eval/demo sequence is a blocking gate, same as the unit tests.
       - run: python -m control_plane.cli presentation
+
+  publish-image:
+    needs: test
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          # Provenance attestation for supply-chain verification downstream.
+          provenance: true
+          tags: |
+            ghcr.io/lolupapi/ai-control-plane:latest
+            ghcr.io/lolupapi/ai-control-plane:${{ github.sha }}

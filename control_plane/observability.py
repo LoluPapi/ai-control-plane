@@ -7,7 +7,9 @@ import time
 from dataclasses import dataclass, field
 from pathlib import Path
 
-DATA_ROOT = Path(__file__).resolve().parent.parent / "data"
+from control_plane.paths import data_root
+
+DATA_ROOT = data_root()
 
 MODEL_COST_PER_1K: dict[str, float] = {
     "small-extractor": 0.0008,
@@ -37,6 +39,44 @@ class MetricsStore:
 
     def record(self, metric: RequestMetrics) -> None:
         self._requests.append(metric)
+
+    def tenant_cost(self, tenant_id: str) -> float:
+        return sum(r.cost_eur for r in self._requests if r.tenant_id == tenant_id)
+
+    def render_prometheus(self) -> str:
+        """Prometheus text exposition — every request carries tenant, use case, model."""
+        counters: dict[tuple[str, str, str, str], int] = {}
+        costs: dict[str, float] = {}
+        latencies: dict[str, list[float]] = {}
+        for r in self._requests:
+            key = (r.tenant_id, r.use_case, r.model, r.workflow_action)
+            counters[key] = counters.get(key, 0) + 1
+            costs[r.tenant_id] = costs.get(r.tenant_id, 0.0) + r.cost_eur
+            latencies.setdefault(r.tenant_id, []).append(r.latency_ms)
+
+        lines = [
+            "# HELP aicp_requests_total Requests processed by the control plane.",
+            "# TYPE aicp_requests_total counter",
+        ]
+        for (tenant, use_case, model, action), count in sorted(counters.items()):
+            lines.append(
+                f'aicp_requests_total{{tenant="{tenant}",use_case="{use_case}",'
+                f'model="{model}",workflow_action="{action}"}} {count}'
+            )
+        lines += [
+            "# HELP aicp_cost_eur_total Cumulative cost per tenant in EUR.",
+            "# TYPE aicp_cost_eur_total counter",
+        ]
+        for tenant, cost in sorted(costs.items()):
+            lines.append(f'aicp_cost_eur_total{{tenant="{tenant}"}} {cost:.6f}')
+        lines += [
+            "# HELP aicp_latency_ms_avg Average request latency per tenant.",
+            "# TYPE aicp_latency_ms_avg gauge",
+        ]
+        for tenant, vals in sorted(latencies.items()):
+            avg = sum(vals) / len(vals) if vals else 0.0
+            lines.append(f'aicp_latency_ms_avg{{tenant="{tenant}"}} {avg:.3f}')
+        return "\n".join(lines) + "\n"
 
     def tenant_summary(self) -> list[dict]:
         by_tenant: dict[str, dict] = {}

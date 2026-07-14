@@ -6,7 +6,9 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
-DATA_ROOT = Path(__file__).resolve().parent.parent / "data"
+from control_plane.paths import data_root
+
+DATA_ROOT = data_root()
 
 
 @dataclass(frozen=True)

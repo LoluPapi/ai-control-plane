@@ -21,6 +21,8 @@ class TenantPolicy:
     external_providers_allowed: bool = True
     min_confidence: float = 0.85
     human_review_on_low_confidence: bool = True
+    # AI FinOps: hard monthly spend ceiling enforced at the gateway/API layer.
+    monthly_budget_eur: float = 100.0
 
 
 TENANT_POLICIES: dict[str, TenantPolicy] = {
@@ -48,6 +50,7 @@ TENANT_POLICIES: dict[str, TenantPolicy] = {
         data_residency="eu",
         external_providers_allowed=False,
         min_confidence=0.85,
+        monthly_budget_eur=500.0,
     ),
     "enterprise_b": TenantPolicy(
         tenant_id="enterprise_b",

@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 import json
-from pathlib import Path
 
+from control_plane.paths import data_root
 from control_plane.schemas import CommerceExtraction, SteelExtraction
 
-DATA_ROOT = Path(__file__).resolve().parent.parent / "data"
+DATA_ROOT = data_root()
 
 
 def _load_steel_grades() -> set[str]:
