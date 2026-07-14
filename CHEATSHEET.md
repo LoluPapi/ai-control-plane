@@ -68,6 +68,32 @@ Every concept in the Vanilla Steel job description, explained the way you'd expl
 
 ---
 
+## The enterprise buyer lens (their clients are automotive OEMs)
+
+When the end customers are companies like large automotive OEMs, the platform IS the sales differentiator. Frame everything through what the **customer's security and procurement teams** will ask Vanilla Steel:
+
+### Why this reframes the role
+- **Simple:** A startup selling to a giant carmaker doesn't lose deals on features — it loses them in the vendor security audit. The platform engineer is the person who makes that audit survivable.
+- **Senior:** "For enterprise OEM customers, the AI platform is a commercial differentiator, not a back-office concern — the job posting says exactly that. Self-hosted deployment, auditability, and tenant isolation are what get the contract signed."
+
+### Tenants are competitors of each other
+- **Simple:** Two rival carmakers may both buy steel through the same platform. If one could ever see the other's prices, volumes, or suppliers, the business is dead.
+- **Senior:** "This is why isolation lives in the retrieval filter and runtime identity, not in a prompt. Cross-tenant leakage between competing OEMs isn't a bug ticket — it's a churn event and possibly a legal one. My demo shows tenant B retrieving zero rows from tenant A's knowledge base, enforced below the model."
+
+### The audit trail
+- **Simple:** When a big customer asks "why did your AI quote this price?", the answer can't be a shrug. Every AI decision needs a paper trail.
+- **Senior:** "Every request carries tenant, model, policy decision, validation result, and workflow action — that's not just observability, it's the audit evidence for ISO 27001 and the EU AI Act. In automotive specifically, expect TISAX-style assessments; the same evidence chain serves both."
+
+### On-prem is a sales feature
+- **Simple:** Some customers will say: run it in our building or no deal. The platform must make that a deployment choice, not a year-long project.
+- **Senior:** "That's why the same kustomize bundle and Pulumi component deploy to SaaS GCP, customer cloud, or on-prem — capability flags, not forks. And the OCI images we ship carry provenance attestation, because the customer's supply-chain audit will ask."
+
+### Talking to enterprise customers (the JD asks for this)
+- If asked "can you hold a technical conversation with a customer?", the answer is a story: *"I'd walk their security team through the request path: where their data enters, which model can see it, where it's stored, how deletion propagates, and what evidence we log. That conversation is what my demo is structured around."*
+- Never name-drop specific client names in the interview unless **they** bring them up first — say "enterprise OEM customers." It signals discretion, which is itself the quality they're screening for.
+
+---
+
 ## The three demos and what each proves
 
 | Demo | Command | Proves |
@@ -83,3 +109,5 @@ Every concept in the Vanilla Steel job description, explained the way you'd expl
 3. "Evals are the test suite — a regression fails the build."
 4. "A wrong steel grade isn't a bad demo, it's a procurement incident."
 5. "KServe schedules the model; vLLM executes the tokens."
+6. "Enterprise customers don't buy the model — they buy the audit trail around it."
+7. "When your tenants compete with each other, isolation is a revenue feature."
