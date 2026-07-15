@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""CLI for live interview demos."""
+"""CLI for live demos."""
 
 from __future__ import annotations
 
@@ -195,7 +195,7 @@ def cmd_costs(_: argparse.Namespace) -> int:
 
 
 def cmd_presentation(_: argparse.Namespace) -> int:
-    """Run the full 10-minute interview sequence."""
+    """Run the full guided demo sequence."""
     sequence = [
         ("commerce", "Use case A — commerce order"),
         ("steel", "Use case B — Vanilla Steel RFQ"),
@@ -233,7 +233,7 @@ def cmd_presentation(_: argparse.Namespace) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="AI Control Plane — interview demo CLI",
+        description="AI Control Plane — demo CLI",
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
@@ -255,7 +255,7 @@ def main(argv: list[str] | None = None) -> int:
     cost = sub.add_parser("costs", help="Show per-tenant cost table")
     cost.set_defaults(func=cmd_costs)
 
-    pres = sub.add_parser("presentation", help="Run full interview demo sequence")
+    pres = sub.add_parser("presentation", help="Run full guided demo sequence")
     pres.set_defaults(func=cmd_presentation)
 
     args = parser.parse_args(argv)

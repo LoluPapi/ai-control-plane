@@ -2,7 +2,7 @@
 
 A **multi-tenant AI control plane** that converts unstructured business requests into **validated, auditable actions**.
 
-Designed for two interview/demo use cases — **commerce order extraction** and **steel RFQ extraction** — on the same platform with different schemas, policies, and knowledge bases.
+Two demo domains — **commerce order extraction** and **steel RFQ extraction** — run on the same platform with different schemas, policies, and knowledge bases.
 
 > **Thesis:** AI demos are easy. The hard part is making AI trustworthy enough to trigger real business actions.
 
@@ -14,7 +14,7 @@ Designed for two interview/demo use cases — **commerce order extraction** and 
 | Untrusted input | WhatsApp / chat messages | Inbound emails and attachments |
 | Enterprise needs | Multi-tenant vendors | Multi-tenant buyers, EU data residency |
 
-This repo proves: **I understand the business problem, I can build the platform, I know where AI systems fail, and I can operate them in production.**
+The platform's job: **validate, observe, and govern every AI decision — because the failure modes are business incidents, not bad demos.**
 
 ## Control plane flow
 
@@ -46,7 +46,7 @@ Approved business workflow
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 
-# Full 10-minute interview sequence
+# Full guided demo sequence
 aicp presentation
 
 # Individual scenarios
@@ -162,9 +162,7 @@ export LITELLM_API_KEY=sk-...
 aicp run commerce --mode llm
 ```
 
-## Portfolio (LoluPapi — safe to share)
-
-All repos below are **personal open-source demos**. No proprietary company code.
+## Related repos
 
 | Repo | Role |
 |------|------|
@@ -173,11 +171,11 @@ All repos below are **personal open-source demos**. No proprietary company code.
 | [pulumi-ai-platform](https://github.com/LoluPapi/pulumi-ai-platform) | Pulumi components + Kubernetes deploy bundle |
 | [foundry-agent-evals](https://github.com/LoluPapi/foundry-agent-evals) | Evaluations as a blocking CI gate |
 
-## Presentation script
+## Architecture
 
-See [PRESENTATION.md](./PRESENTATION.md) for the minute-by-minute interview walkthrough,
-and [SHEET.md](./SHEET.md) for plain-English explanations of every concept
-(LiteLLM, KServe vs vLLM, MCP security, EU AI Act, FinOps, paved roads).
+See [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the full design:
+high-level flow, request sequence, risk-based routing, tenant isolation
+model, and deployment topology.
 
 ## Design patterns demonstrated
 
