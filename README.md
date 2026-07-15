@@ -169,13 +169,14 @@ All repos below are **personal open-source demos**. No proprietary company code.
 | Repo | Role |
 |------|------|
 | [ai-control-plane](https://github.com/LoluPapi/ai-control-plane) | This repo — application control plane + live demo |
+| [agentic-commerce-lab](https://github.com/LoluPapi/agentic-commerce-lab) | The agent layer: tool-calling loop with production guards |
 | [pulumi-ai-platform](https://github.com/LoluPapi/pulumi-ai-platform) | Pulumi components + Kubernetes deploy bundle |
 | [foundry-agent-evals](https://github.com/LoluPapi/foundry-agent-evals) | Evaluations as a blocking CI gate |
 
 ## Presentation script
 
 See [PRESENTATION.md](./PRESENTATION.md) for the minute-by-minute interview walkthrough,
-and [CHEATSHEET.md](./CHEATSHEET.md) for plain-English explanations of every concept
+and [SHEET.md](./SHEET.md) for plain-English explanations of every concept
 (LiteLLM, KServe vs vLLM, MCP security, EU AI Act, FinOps, paved roads).
 
 ## Design patterns demonstrated

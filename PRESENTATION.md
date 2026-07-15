@@ -159,6 +159,7 @@ const platform = new AiPlatform("customer-a", {
 
 ## Repos to share (LoluPapi only — no company code)
 
-1. https://github.com/LoluPapi/ai-control-plane — this demo (FastAPI + MCP + CLI)
-2. https://github.com/LoluPapi/pulumi-ai-platform — IaC components, stacks, K8s bundle, ESC
-3. https://github.com/LoluPapi/foundry-agent-evals — evals as a blocking CI gate
+1. https://github.com/LoluPapi/ai-control-plane — this demo (FastAPI + MCP + CLI + UI)
+2. https://github.com/LoluPapi/agentic-commerce-lab — the agent loop with production guards (dedup, supervisor, injection)
+3. https://github.com/LoluPapi/pulumi-ai-platform — IaC components, stacks, K8s bundle, ESC
+4. https://github.com/LoluPapi/foundry-agent-evals — evals as a blocking CI gate
